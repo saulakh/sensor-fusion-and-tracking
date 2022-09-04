@@ -11,9 +11,11 @@
 #
 
 # general package imports
+from xml.dom import INDEX_SIZE_ERR
 import cv2
 import numpy as np
 import torch
+import open3d as o3d
 
 # add project directory to python path to enable relative imports
 import os
@@ -38,14 +40,26 @@ def show_pcl(pcl):
     print("student task ID_S1_EX2")
 
     # step 1 : initialize open3d with key callback and create window
-    
+    vis_pcl = o3d.visualization.VisualizerWithKeyCallback()
+    vis_pcl.create_window(window_name='Lidar Point Cloud', width=1280, height=1080)
     # step 2 : create instance of open3d point-cloud class
-
+    pcd = o3d.geometry.PointCloud()
     # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
-
+    pcd.points = o3d.utility.Vector3dVector(pcl[:,:3]) # input is xyz from pcl
     # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
-    
+    vis_pcl.add_geometry(pcd)
     # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
+    global idx
+    idx = True
+    def right_click(vis_pcl):
+        global idx
+        idx = False
+        return
+    vis_pcl.register_key_callback(262,right_click)
+    
+    while idx:
+        vis_pcl.poll_events()
+        vis_pcl.update_renderer()
 
     #######
     ####### ID_S1_EX2 END #######     
