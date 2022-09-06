@@ -228,7 +228,7 @@ def detect_objects(input_bev_maps, model, configs):
     ## step 1 : check whether there are any detections
     if len(detections) > 0:
         ## step 2 : loop over all detections
-        for detection in detections[0][1]:
+        for detection in detections:
             score, x_bev, y_bev, z, h, w_bev, l_bev, yaw = detection
             ## step 3 : perform the conversion using the limits for x, y and z set in the configs structure
             lim_x_range = configs.lim_x[1] - configs.lim_x[0] # vertical range
