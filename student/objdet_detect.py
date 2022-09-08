@@ -50,6 +50,7 @@ def load_configs_model(model_name='darknet', configs=None):
         configs.batch_size = 4
         configs.cfgfile = os.path.join(configs.model_path, 'config', 'complex_yolov4.cfg')
         configs.conf_thresh = 0.5
+        configs.min_iou = 0.5
         configs.distributed = False
         configs.img_size = 608
         configs.nms_thresh = 0.4
@@ -67,6 +68,7 @@ def load_configs_model(model_name='darknet', configs=None):
         configs.arch = 'fpn_resnet'
         configs.saved_fn = 'fpn_resnet_18'
         configs.conf_thresh = 0.5
+        configs.min_iou = 0.5
         configs.K = 50
         configs.no_cuda = False
         configs.gpu_idx = 0
